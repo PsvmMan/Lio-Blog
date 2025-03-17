@@ -9,7 +9,7 @@ export default defineConfig({
       "link",
       {
         rel: "icon",
-        href: "/Psvm-RPC/logo.png",
+        href: "/logo.png",
       },
     ],
   ],
