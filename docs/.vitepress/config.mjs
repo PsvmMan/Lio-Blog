@@ -67,7 +67,8 @@ export default defineConfig({
             items: [
               { text: 'TCP', link: '' },
               { text: 'UDP', link: '' },
-              { text: 'HTTP', link: '' }
+              { text: 'HTTP', link: '' },
+              { text: 'HTTPS', link: '' }
             ]
           },
           {
