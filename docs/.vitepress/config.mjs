@@ -2,7 +2,6 @@ import { defineConfig } from 'vitepress'
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
-  base: '/Psvm-RPC/',
   title: "Psvm",
   description: "一个基于Netty的高性能RPC框架",
   head: [
