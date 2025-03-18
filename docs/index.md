@@ -9,7 +9,7 @@ hero:
   actions:
     - theme: brand
       text: 开始阅读
-      link: /NetworkProgramming/RPC
+      link: /NetworkProgramming/DynamicAgent
     - theme: alt
       text: Psvm-RPC 代码仓库
       link: https://github.com/PsvmMan/Psvm-RPC

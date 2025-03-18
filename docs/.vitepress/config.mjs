@@ -19,7 +19,7 @@ export default defineConfig({
 
     outline: {
       label: "页面导航",
-      level: [2, 5],
+      level: [1, 5],
     },
     footer: {
       message: "Released under the MIT License.",
@@ -48,13 +48,15 @@ export default defineConfig({
 
     nav: [
       { text: '首页', link: '/' },
-      {
-        text: 'Java',
-        items: [
-          { text: '网络编程', link: '/NetworkProgramming/RPC',activeMatch: "/NetworkProgramming" },
-          { text: '并发编程', link: '/ConcurrentProgramming/multithreading',activeMatch: "/ConcurrentProgramming" }
-        ]
-      }
+      { text: '网络编程', link: '/NetworkProgramming/DynamicAgent',activeMatch: "/NetworkProgramming" },
+      { text: '并发编程', link: '/ConcurrentProgramming/multithreading',activeMatch: "/ConcurrentProgramming" }
+      // {
+      //   text: 'Java',
+      //   items: [
+      //     { text: '网络编程', link: '/NetworkProgramming/RPC_Basics',activeMatch: "/NetworkProgramming" },
+      //     { text: '并发编程', link: '/ConcurrentProgramming/multithreading',activeMatch: "/ConcurrentProgramming" }
+      //   ]
+      // }
     ],
 
     sidebar: {
@@ -88,7 +90,8 @@ export default defineConfig({
           {
             text: '第四部分：RPC',
             items: [
-              { text: '如何实现一个高性能的RPC框架', link: '/RPC' }
+              { text: '补课：动态代理', link: '/DynamicAgent' },
+              { text: 'RPC框架的基础介绍', link: '/RPC_Basics' }
             ]
           }
         ]
