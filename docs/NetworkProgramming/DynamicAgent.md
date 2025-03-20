@@ -194,7 +194,63 @@ public class CglibProxyFactory implements MethodInterceptor {
 
 ![](/DynamicAgent/1.png)
 
-### <font style="background-color:rgba(255, 255, 255, 0);">2. 实现原理</font>
+### <font style="background-color:rgba(255, 255, 255, 0);">2. FastClass机制</font>
+在学习CGLIB原来之前，一定需要先了解一下Fastclass机制，因为这是CGLIB的核心。
+
+FastClass是一个高效的Java方法调用库，它旨在提供比传统Java反射更快的方法调用途径。其核心原理是通过为每个类生成一个辅助类（称为FastClass），并为每个方法分配一个唯一的索引（index）。在调用方法时，FastClass通过索引直接定位到目标方法并进行调用，从而避免了反射调用中的复杂步骤，显著提高了性能。
+
+具体实现上，FastClass为每个类的方法建立索引，这些索引在方法调用时作为参数传递给FastClass的`invoke`方法。`invoke`方法根据索引直接定位到目标方法并执行，无需像反射那样经过一系列的权限验证和方法查找过程。
+
+下面我们通过一个案例来展示FastClass的厉害之处，假设我们有一个`User`类，有一个`name`属性，包含`setName`、`getName`方法。我们将展示如何使用FastClass来调用`setName`方法给`name`字段赋值，而不用传统的反射技术。
+
+```java
+public class User {
+    private String name;
+
+    public User() {
+
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+}
+```
+
+```java
+public class FastClassExample {
+    public static void main(String[] args) {
+        try {
+            // 创建User类的FastClass实例
+            FastClass userFastClass = FastClass.create(User.class);
+
+            // 获取setName方法的索引
+            int methodIndex = userFastClass.getIndex("setName", new Class[]{String.class});
+
+            // 创建User对象实例
+            User user = new User();
+
+            // FastClass 即可通过 index 索引定位到需要调用的方法
+            userFastClass.invoke(methodIndex, user, new Object[]{"gt"});
+
+            System.out.println(user.getName());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+执行结果：
+
+`gt`
+
+### <font style="background-color:rgba(255, 255, 255, 0);">3. 实现原理</font>
 intercept方法中送的对象是代理对象，但是我们通常是要调用父类对象的方法（因为我们通常是在被代理对象方法执行的上下添加一些额外的功能逻辑），需要借助MethodProxy方法代理类来实现，它的invokeSuper方法可以帮助我们调用父类（被代理类）的方法。
 
 在介绍原理之前，我先总结用法，因为原理比较复杂，比较绕，如果我们只是使用层面，记住下面两点即可。
@@ -222,12 +278,19 @@ public class User$$EnhancerByCGLIB$$eaa3a969 extends User implements Factory {
     // 这就是我们创建代理类时候送的拦截器入参对象
     private MethodInterceptor CGLIB$CALLBACK_0;
 
+    static {
+        CGLIB$STATICHOOK1();
+    }
+
     // 为add方法创建的MethodProxy对象
     static void CGLIB$STATICHOOK1() {
+        // var0就是代理类，var1是被代理类
+        Class var0 = Class.forName("hut.gt.Cglib.User$$EnhancerByCGLIB$$eaa3a969");
         CGLIB$add$0$Proxy = MethodProxy.create(var1, var0, "(Ljava/lang/String;)V", "add", "CGLIB$add$0");
     }
 
     public static MethodProxy create(Class c1, Class c2, String desc, String name1, String name2) {
+        // c1就是被代理类，c2就是代理类
         MethodProxy proxy = new MethodProxy();
         proxy.sig1 = new Signature(name1, desc);
         proxy.sig2 = new Signature(name2, desc);
@@ -278,7 +341,21 @@ public class User$$EnhancerByCGLIB$$eaa3a969 extends User implements Factory {
     }
 ```
 
-首先执行的是`init()`方法，在该方法内部对fastClassInfo字段进行赋值：
+首先执行的是`init()`方法，这个方法特别重要，你可以理解这个方法就是为了给`fastClassInfo`对象赋值，而且是单例模式，因为涉及到并发问题，所以这里使用的是双重检查锁来创建这个单例对象。
+
+我们先看一下`FastClassInfo`的类结构，它的类结构非常的简单，f1代表被代理类对应的索引类对象，f2代表代理类对应的索引类对象，i1、i2对应的就是方法对应的索引。所以`init()`方法的目的就非常简单了，它就是要为某一个方法缓存这些可以直接调用方法的索引类信息和方法索引，那么下次进入`invokeSuper`方法就不会执行`init`中的逻辑了，而是直接调用`fci.f2.invoke(fci.i2, obj, args)`。
+
+```java
+private static class FastClassInfo {
+    FastClass f1;
+    FastClass f2;
+    int i1;
+    int i2;
+
+    private FastClassInfo() {
+    }
+}
+```
 
 ```java
     private void init() {
@@ -419,7 +496,7 @@ public class User$$EnhancerByCGLIB$$eaa3a969 extends User implements Factory {
 }
 ```
 
-### <font style="background-color:rgba(255, 255, 255, 0);">3. 总结</font>
+### <font style="background-color:rgba(255, 255, 255, 0);">4. 总结</font>
 CGLIB动态代理，可以代理任何类，没有实现接口的类也行，通过字节码生成代理对象，创建开销较大，但是方法调用开销很小，因为它是通过继承代理类创建一个子类，子类重写了被代理类中所有非final的方法，方法调用就是正常的调用子类方法，对性能的影响比较低。
 
 
