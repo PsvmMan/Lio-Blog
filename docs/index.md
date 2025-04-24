@@ -3,25 +3,25 @@
 layout: home
 
 hero:
-  name: "Psvm-RPC"
+  name: "Learn Java"
   text: ""
-  tagline: 基于 Netty 的高性能 RPC 框架
+  tagline: Don't worry， just go ahead and do it.
   actions:
     - theme: brand
       text: 开始阅读
       link: /NetworkProgramming/DynamicAgent
     - theme: alt
-      text: Psvm-RPC 代码仓库
-      link: https://github.com/PsvmMan/Psvm-RPC
+      text: 代码仓库
+      link: https://github.com/PsvmMan
 
 features:
-  - title: 网络协议
-    details: 第一步从最基础的网络协议开始学习，例如TCP、UDP、HTTP、HTTPS
+  - title: 集合
+    details: 学习Java常用的集合框架，如List、Set、Map等，并对集合的源码进行深入的解析
   - title: 网络编程
-    details: 第二步开始实战JDK原生的网络编程，例如Socket、NIO，学习IO模型、线程模型、网络编程基础等
-  - title: Netty
-    details: 第三步学习Netty，Netty是Java的异步网络编程解决方案，学习Netty的编程原理
-  - title: RPC
-    details: 第四步实战 RPC
+    details: 学习Java网络编程，如BIO和NIO编程，深入了解IO多路复用机制，如select、poll、epoll，熟练掌握TCP/IP、UDP、HTTP等网络协议
+  - title: 并发编程
+    details: 学习Java并发编程，理解Java内存模型，熟悉线程的生命周期、同步与异步操作。深入理解源码并熟练使用 线程池、Future、CAS、ReentrantLock等并发工具，对AQS源码有深入研究
+  - title: 框架
+    details: Spring、SpringMvc、Mybatis、SpringBoot、Netty、Dubbo等框架的源码分析
 ---
 

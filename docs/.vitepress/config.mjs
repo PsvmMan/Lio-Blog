@@ -110,7 +110,7 @@ export default defineConfig({
     },
 
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/PsvmMan/Psvm-RPC' }
+      { icon: 'github', link: 'https://github.com/PsvmMan' }
     ],
 
     search: {
