@@ -48,6 +48,7 @@ export default defineConfig({
 
     nav: [
       { text: '首页', link: '/' },
+      { text: 'Java基础', link: '/',activeMatch: "/JavaBase" },
       { text: '网络编程', link: '/NetworkProgramming/DynamicAgent',activeMatch: "/NetworkProgramming" },
       { text: '并发编程', link: '/ConcurrentProgramming/multithreading',activeMatch: "/ConcurrentProgramming" }
       // {
@@ -68,7 +69,8 @@ export default defineConfig({
             items: [
               { text: 'TCP', link: '' },
               { text: 'UDP', link: '' },
-              { text: 'HTTP', link: '' }
+              { text: 'HTTP', link: '' },
+              { text: 'WebSocket', link: '/WebSocket' }
             ]
           },
           {
@@ -103,6 +105,17 @@ export default defineConfig({
             text: '第一部分：并发编程',
             items: [
               { text: '并发编程', link: '/multithreading' }
+            ]
+          }
+        ]
+      },
+      "/JavaBase": {
+        base: "/JavaBase",
+        items:[
+          {
+            text: '第一部分：基础',
+            items: [
+              { text: '集合', link: '/list' }
             ]
           }
         ]
