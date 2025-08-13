@@ -9,7 +9,7 @@ hero:
   actions:
     - theme: brand
       text: 开始阅读
-      link: /NetworkProgramming/DynamicAgent
+      link: /Redis/fast
     - theme: alt
       text: 代码仓库
       link: https://github.com/PsvmMan

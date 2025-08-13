@@ -48,6 +48,9 @@ export default defineConfig({
 
     nav: [
       { text: '首页', link: '/' },
+      { text: 'Redis', link: '/Redis/fast',activeMatch: "/Redis" },
+      { text: 'RocketMQ', link: '/RocketMQ/单机环境搭建',activeMatch: "/RocketMQ" },
+      { text: 'MySQL', link: '/MySQL/mysql1',activeMatch: "/MySQL" },
       { text: 'Java基础', link: '/',activeMatch: "/JavaBase" },
       { text: '网络编程', link: '/NetworkProgramming/DynamicAgent',activeMatch: "/NetworkProgramming" },
       { text: '并发编程', link: '/ConcurrentProgramming/multithreading',activeMatch: "/ConcurrentProgramming" }
@@ -118,6 +121,41 @@ export default defineConfig({
               { text: '集合', link: '/list' }
             ]
           }
+        ]
+      },
+      "/MySQL": {
+        base: "/MySQL",
+        items:[
+          { text: 'MySQL(上)', link: '/mysql1' },
+          { text: 'MySQL(下)', link: '/mysql2' }
+        ]
+      },
+      "/Redis": {
+        base: "/Redis",
+        items:[
+          { text: 'Redis高性能', link: '/fast' },
+          { text: 'Redis数据持久化', link: '/save' },
+          { text: '主从复制', link: '/copy' },
+          { text: '哨兵机制', link: '/sentinel' },
+          { text: '分片集群', link: '/cluster' },
+          { text: '缓存策略', link: '/memory' },
+          { text: '缓存异常', link: '/err' }
+        ]
+      },
+      "/RocketMQ": {
+        base: "/RocketMQ",
+        items:[
+          { text: '单机环境搭建', link: '/单机环境搭建' },
+          { text: '四种集群方案', link: '/四种集群方案' },
+          { text: '搭建Dledger高可用集群', link: '/搭建Dledger高可用集群' },
+          { text: 'RocketMQ核心概念', link: '/RocketMQ核心概念' },
+          { text: '深度解析RocketMQ', link: '/深度解析RocketMQ' },
+          { text: 'RocketMQ的API使用', link: '/RocketMQ的API使用' },
+          { text: '事务消息', link: '/事务消息' },
+          { text: '消息丢失问题', link: '/消息丢失问题' },
+          { text: '消息的有序性', link: '/消息的有序性' },
+          { text: '快速处理积压的消息', link: '/快速处理积压的消息' },
+          { text: '消息拉取问题', link: '/消息拉取问题' }
         ]
       }
     },
